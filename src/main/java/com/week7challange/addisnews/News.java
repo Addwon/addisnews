@@ -9,13 +9,28 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class News {
-private String status;
-private int totalResults;
-private List<Articles> articles;
+    private long id;
+    private String status;
+    private int totalResults;
+    private Articles[] articles;
+
     public News() {
     }
-    @JsonProperty("newsapi")
-    private List<News> news;
+
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+/*  public News(Articles[] articles) {
+        this.articles = articles;
+    }*/
+
+    /*@JsonProperty("newsapi")
+            private List<News> news;*/
     public String getStatus() {
         return status;
     }
@@ -32,19 +47,11 @@ private List<Articles> articles;
         this.totalResults = totalResults;
     }
 
-    public List<Articles> getArticles() {
+    public Articles[] getArticles() {
         return articles;
     }
 
-    public void setArticles(List<Articles> articles) {
+    public void setArticles(Articles[] articles) {
         this.articles = articles;
-    }
-
-    public List<News> getNews() {
-        return news;
-    }
-
-    public void setNews(List<News> news) {
-        this.news = news;
     }
 }

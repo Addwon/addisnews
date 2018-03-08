@@ -28,5 +28,20 @@
         </div>
     </div>
 </div>-->
+
+<div class="container">
+    <h5>Articles</h5>
+    <div class="card">
+        <div class="card-body" th:each="articles : ${articles}">
+            <Span th:text="${articles.author}"></Span> <br/>
+            <Span th:text="${articles.title}"></Span><br />
+            <Span th:text="${articles.description}"></Span><br/>
+            <span><a th:href="${articles.url}"><Span th:text="${articles.url}"></Span></a></span><br/>
+            <!--<Span th:text="${articles.url}"></Span><br/>-->
+            <span><img class="img-rounded" th:src="${articles.urlToImage}" alt="image" style="width:10%"/><br/></span>
+            <Span th:text="${articles.publishedAt}"></Span><br/>
+        </div>
+    </div>
+</div>
 </body>
 </html>

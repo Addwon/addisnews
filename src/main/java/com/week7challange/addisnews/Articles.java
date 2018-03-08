@@ -3,37 +3,34 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Articles {
-    private long id;
-   // private Source source;
-    //private List<Sources> sources;
+    //private long id;
+    private Source source;
     private String author;
     private String title;
     private String description;
     private String url;
+    private String urlToImage;
     private String publishedAt;
     public Articles() {
     }
-    @JsonProperty("newsapi1")
-    private List<Articles> articles;
-    public long getId() {
-        return id;
+
+
+
+    /*@JsonProperty("newsapi1")
+        private List<Articles> articles;*/
+
+    public String getUrlToImage() {
+        return urlToImage;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUrlToImage(String urlToImage) {
+        this.urlToImage = urlToImage;
     }
-
-   /* public List<Source> getSource() {
-        return source;
-    }
-
-    public void setSource(List<Source> source) {
-        this.source = source;
-    }*/
 
    /* public Source getSource() {
         return source;
@@ -83,11 +80,5 @@ public class Articles {
         this.publishedAt = publishedAt;
     }
 
-    public List<Articles> getArticles() {
-        return articles;
-    }
 
-    public void setArticles(List<Articles> articles) {
-        this.articles = articles;
-    }
 }

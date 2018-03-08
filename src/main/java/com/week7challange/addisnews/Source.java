@@ -6,17 +6,21 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Source {
-    private long id;
+    private String id;
     private String name;
+
     public Source() {
     }
-   /* @JsonProperty("newsapi2")
-    private List<Source> sources;*/
-    public long getId() {
+
+
+    /* @JsonProperty("newsapi2")
+            private List<Source> sources;*/
+
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -28,11 +32,6 @@ public class Source {
         this.name = name;
     }
 
-   /* public List<Source> getSources() {
-        return sources;
-    }
 
-    public void setSources(List<Source> sources) {
-        this.sources = sources;
-    }*/
+
 }
