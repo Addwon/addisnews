@@ -33,6 +33,7 @@
     <h5>Articles</h5>
     <div class="card">
         <div class="card-body" th:each="articles : ${articles}">
+            <!--<Span th:text="${articles.source.name}"></Span> <br/>-->
             <Span th:text="${articles.author}"></Span> <br/>
             <Span th:text="${articles.title}"></Span><br />
             <Span th:text="${articles.description}"></Span><br/>

@@ -26,6 +26,8 @@ public class MainController {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @RequestMapping("/login")
     public String login(){return "login";}
@@ -76,8 +78,25 @@ public class MainController {
         }
 
     }
+    //Add topic of interest
+    @RequestMapping(value="/topicsofinterestform",method= RequestMethod.GET)
+    public String showTopicsofInterestPage(Model model){
+        model.addAttribute("category",new Category());
+        return "topicsofinterestform";
+    }
+    @RequestMapping(value="/topicsofinterestform",method= RequestMethod.POST)
+    public String processTopicsofInterestPage(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model,Principal principal){
 
+        if(result.hasErrors()){
+            return "topicsofinterestform";
+        }else{
+            User user=userRepository.findByUsername(principal.getName());
+            //category.setUsers(user.getId());
+            categoryRepository.save(category);
+            return "redirect:/";
+        }
 
+    }
     //Search items
 
    /* @GetMapping("/search")

@@ -3,8 +3,10 @@ package com.week7challange.addisnews;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 @Entity
 public class User {
@@ -27,9 +29,25 @@ public class User {
 
     @Column(name="enabled")
     private boolean enabled;
+   /*
+    @Column(name="category")
+    private Collection<String> categoryofInterest=new HashSet<>();
+
+    public User(Collection<String> categoryofInterest) {
+        this.categoryofInterest = categoryofInterest;
+    }*/
+
+//   private String[] categoryofInterest;
 
     @Column(name="username")
+
     private String username;
+
+    @ManyToMany(fetch=FetchType.EAGER)
+    @JoinTable(joinColumns=@JoinColumn(name = "user_id"),
+            inverseJoinColumns=@JoinColumn(name="category_id"))
+    private Collection<Category> categories;
+
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(joinColumns=@JoinColumn(name = "user_id"),
@@ -112,5 +130,11 @@ public class User {
         this.roles = roles;
     }
 
+    public Collection<Category> getCategories() {
+        return categories;
+    }
 
+    public void setCategories(Collection<Category> categories) {
+        this.categories = categories;
+    }
 }
