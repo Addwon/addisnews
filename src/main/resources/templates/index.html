@@ -6,9 +6,27 @@
     <title>Index</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
     <!--<link href="/css/style.css" rel="stylesheet"/>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="News.js"></script>
+
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
-
+<!--<div>
+    <p class="id">Id</p>
+    <p class="name">Name</p>
+    <p class="title">Title</p>
+    <p class="description">Description</p>
+    <p class="response">Description</p>
+</div>-->
+<p th:inline="text"><span>  Authors: [[${author}]]</span></p>
+<!--<div class="container">
+    <h5>Reference</h5>
+    <div class="card">
+        <div class="card-body" th:each="articles : ${articles}">
+            <Span th:text="${articles.author}"></Span><br/>
+        </div>
+    </div>
+</div>-->
 </body>
 </html>
