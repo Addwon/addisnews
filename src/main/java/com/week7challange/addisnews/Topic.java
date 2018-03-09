@@ -1,9 +1,6 @@
 package com.week7challange.addisnews;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Topic {
@@ -13,11 +10,16 @@ public class Topic {
 
     private String topictext;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = true)
+    private User user;
+
     public Topic() {
     }
 
-    public Topic(String topictext) {
+    public Topic(String topictext, User user) {
         this.topictext = topictext;
+        this.user = user;
     }
 
     public long getId() {
@@ -34,5 +36,13 @@ public class Topic {
 
     public void setTopictext(String topictext) {
         this.topictext = topictext;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

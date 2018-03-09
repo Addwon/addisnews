@@ -45,6 +45,7 @@ public class DataLoader implements CommandLineRunner {
 
         Topic topic=new Topic();
         topic.setTopictext("Apple");
+        topic.setUser(user2);
         topicRepository.save(topic);
 
         Category category=new Category();

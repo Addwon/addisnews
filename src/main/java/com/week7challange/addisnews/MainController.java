@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -98,7 +99,7 @@ public class MainController {
         //category.setNewsCategory(source.getName());
         categoryRepository.save(category);
         //sourceRepository.save(newsAgencies.getSources());
-        return "redirect:/selectednews";
+        return "redirect:/categorylist";
     }
     //Show selected news
     @RequestMapping("/selectednews")
@@ -124,14 +125,17 @@ public class MainController {
         return "addtopic";
     }
     @PostMapping("/addtopic")
-    public String addTopicForm(@Valid @ModelAttribute("topic") Topic topic, BindingResult result,Model model,
+    public String addTopicForm(@RequestParam String newsCategory,@Valid @ModelAttribute("topic") Topic topic, BindingResult result,Model model,Principal principal,
                               RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
             return "addtopic";
         }
         else{
+            User user=userRepository.findByUsername(principal.getName());
+            topic.setUser(user);
             topicRepository.save(topic);
             System.out.println("from postmaping "+topic.getTopictext());
+            System.out.println("from postmaping requestparam string "+newsCategory);
             return "redirect:/";
         }
     }

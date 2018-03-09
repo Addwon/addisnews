@@ -14,13 +14,16 @@
     <form th:action="@{/addcategory}" th:method="post" th:object="${category}">
         <input type="hidden" th:field="*{id}">
 
-        <select id="topics" name="category" class="selectpicker">
+        <select id="topics" name="newsCategory" class="selectpicker">
 
-            <option th:each="category :${categories}" id="newsCategory" th:value="${cat}" th:text="${category}" th:selected="${newsCategory}"></option>
+            <option th:each="category :${categories}" id="newsCategory" th:value="${id}" th:text="${category}" th:selected="${newsCategory}"></option>
 
             <input type="Submit" value="Submit">
         </select>
 
+       <!-- <select th:field="*{rows[__${rowStat.index}__].variety}">
+            <option th:each="var : ${allVarieties}" th:value="${var.id}" th:text="${var.name}">Thymus Thymi</option>
+        </select>-->
     </form>
 
 </div>

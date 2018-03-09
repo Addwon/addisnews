@@ -1,6 +1,7 @@
 package com.week7challange.addisnews;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import java.util.*;
@@ -12,7 +13,7 @@ public class User {
     private long id;
 
     @Email
-    @Column(name="email",nullable=false)
+    @NotEmpty(message = "Enter email")
     private String email;
 
     @Column(name="password")
@@ -40,6 +41,12 @@ public class User {
 
     private String username;
 
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "user")
+    private Collection<Topic> topics = new HashSet<>();
+
+
    /* @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(joinColumns=@JoinColumn(name = "user_id"),
             inverseJoinColumns=@JoinColumn(name="category_id"))
@@ -59,6 +66,14 @@ public class User {
         this.lastName = lastName;
         this.enabled = enabled;
         this.username = username;
+    }
+
+    public Collection<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(Collection<Topic> topics) {
+        this.topics = topics;
     }
 
     public User() {
