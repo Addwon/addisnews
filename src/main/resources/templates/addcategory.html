@@ -16,7 +16,7 @@
 
         <select id="topics" name="newsCategory" class="selectpicker">
 
-            <option th:each="category :${categories}" id="newsCategory" th:value="${id}" th:text="${category}" th:selected="${newsCategory}"></option>
+            <option th:each="category :${categories}" id="newsCategory" th:value="${category}" th:text="${category}" th:selected="selected"></option>
 
             <input type="Submit" value="Submit">
         </select>

@@ -88,7 +88,7 @@ public class MainController {
 
 
     @PostMapping("/addcategory")
-    public String addCategory(Category category, BindingResult result, Model model,Source source, NewsAgencies newsAgencies,Authentication auth, HttpServletRequest request ){
+    public String addCategory(@RequestParam("newsCategory") String newsCategory,Category category, BindingResult result, Model model,Source source, NewsAgencies newsAgencies,Authentication auth, HttpServletRequest request ){
 
         if (result.hasErrors()) {
             return "addcategory";
@@ -97,8 +97,10 @@ public class MainController {
         category.addUser(user);
         System.out.println("PostMapping, source.getName():"+source.getName());
         //category.setNewsCategory(source.getName());
+        category.setNewsCategory(newsCategory);
         categoryRepository.save(category);
         //sourceRepository.save(newsAgencies.getSources());
+        System.out.println("from postmaping requestparam string "+newsCategory);
         return "redirect:/categorylist";
     }
     //Show selected news
@@ -125,7 +127,7 @@ public class MainController {
         return "addtopic";
     }
     @PostMapping("/addtopic")
-    public String addTopicForm(@RequestParam String newsCategory,@Valid @ModelAttribute("topic") Topic topic, BindingResult result,Model model,Principal principal,
+    public String addTopicForm(@Valid @ModelAttribute("topic") Topic topic, BindingResult result,Model model,Principal principal,
                               RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
             return "addtopic";
@@ -135,7 +137,7 @@ public class MainController {
             topic.setUser(user);
             topicRepository.save(topic);
             System.out.println("from postmaping "+topic.getTopictext());
-            System.out.println("from postmaping requestparam string "+newsCategory);
+
             return "redirect:/";
         }
     }
@@ -154,6 +156,7 @@ public class MainController {
         RestTemplate restTemplate=new RestTemplate();
         News news=restTemplate.getForObject(newsURL,News.class);
         model.addAttribute("articles",news.getArticles());
+
         return "showtopic";
     }
 
@@ -174,6 +177,14 @@ public class MainController {
         News news=restTemplate.getForObject(newsURL,News.class);
         model.addAttribute("articles",news.getArticles());
         return "selectednews";
+    }
+
+
+    @RequestMapping("/removecategory/{id}")
+    public String removeCategory(@PathVariable("id") long id, Model model){
+        //Category category=categoryRepository.findOne(id);
+        categoryRepository.delete(id);
+        return "redirect:/categorylist";
     }
 /*
     //Show topic

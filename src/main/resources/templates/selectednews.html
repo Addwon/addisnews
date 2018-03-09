@@ -13,10 +13,10 @@
 <body>
 <div th:replace="base :: navlinks"></div>
 
-<div class="container">
+<!--<div class="container">
     <h5>Selected news</h5>
-    <!--<div class="card" th:each="category : ${category}">
-        <div class="card-body" th:each="source : ${source}" th:if="${source.category}==category.newsCategory">-->
+    &lt;!&ndash;<div class="card" th:each="category : ${category}">
+        <div class="card-body" th:each="source : ${source}" th:if="${source.category}==category.newsCategory">&ndash;&gt;
     <div class="card" >
         <div class="card-body" th:each="source : ${source}" >
             <Span th:text="${source.name}"></Span> <br/>
@@ -26,10 +26,10 @@
             <Span th:text="${source.language}"></Span><br/>
         </div>
     </div>
-</div>
+</div>-->
 
 <div class="container">
-    <h5>Articles</h5>
+    <h5>News by category</h5>
     <div class="card">
         <div class="card-body" th:each="articles : ${articles}">
             <!--<Span th:text="${articles.source.name}"></Span> <br/>-->

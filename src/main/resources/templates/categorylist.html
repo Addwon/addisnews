@@ -27,8 +27,8 @@
     <tr th:each="category : ${category}" >
 
         <td th:text="${category.newsCategory}"></td>
-
-        <td><a th:href="@{/showcategory/{id} (id=${category.id})}">show</a></td>
+        <td><a th:href="@{/removecategory/{id} (id=${category.id})}">Remove</a></td>
+        <td><a th:href="@{/showcategory/{id} (id=${category.id})}">Show</a></td>
     </tr>
     </tbody>
     </table>
