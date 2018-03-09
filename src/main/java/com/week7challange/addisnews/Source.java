@@ -6,9 +6,15 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Source {
+
     private String id;
     private String name;
+    private String category;
 
+    private String description;
+    private String url;
+
+    private String language;
     public Source() {
     }
 
@@ -32,6 +38,35 @@ public class Source {
         this.name = name;
     }
 
+    public String getCategory() {
+        return category;
+    }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
 }

@@ -3,10 +3,7 @@ package com.week7challange.addisnews;
 import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class User {
@@ -43,11 +40,12 @@ public class User {
 
     private String username;
 
-    @ManyToMany(fetch=FetchType.EAGER)
+   /* @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(joinColumns=@JoinColumn(name = "user_id"),
             inverseJoinColumns=@JoinColumn(name="category_id"))
-    private Collection<Category> categories;
-
+    private Collection<Category> categories;*/
+    @ManyToMany(mappedBy = "users")
+    private Set<Category> categories;
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(joinColumns=@JoinColumn(name = "user_id"),
@@ -64,6 +62,7 @@ public class User {
     }
 
     public User() {
+        this.categories=new HashSet<>();
     }
 
     public long getId() {
@@ -130,11 +129,19 @@ public class User {
         this.roles = roles;
     }
 
-    public Collection<Category> getCategories() {
+ /*   public Collection<Category> getCategories() {
         return categories;
     }
 
     public void setCategories(Collection<Category> categories) {
+        this.categories = categories;
+    }*/
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
         this.categories = categories;
     }
 }

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>User Registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <!--<link href="/css/style.css" rel="stylesheet"/>-->
+
+</head>
+<body>
+<div th:replace="base :: navlinks"></div>
+<div class="container" >
+    <form th:action="@{/addcategory}" th:method="post" th:object="${category}">
+        <input type="hidden" th:field="*{id}">
+
+        <select id="topics" name="category" class="selectpicker">
+
+            <option th:each="category :${categories}" id="newsCategory" th:value="${newsCategory}" th:text="${category}" selected="selected"></option>
+
+            <input type="Submit" value="Submit">
+        </select>
+
+    </form>
+
+</div>
+</body>
+
+</html>

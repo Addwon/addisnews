@@ -1,6 +1,7 @@
 package com.week7challange.addisnews;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,17 +11,25 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-//    private List<String> newsCategories;
 
-    @ManyToMany(mappedBy="categories",fetch=FetchType.LAZY)
-    private Collection<User> users;
+    /*@ManyToMany(mappedBy="categories",fetch=FetchType.LAZY)
+    private Collection<User> users;*/
+    @Column(name="newsCategory")
+    private String newsCategory;
+
+    @ManyToMany
+    private List<User> users;
 
     public Category() {
+        users=new ArrayList<>();
     }
 
-//    public Category(List<String> category) {
-//        this.category = category;
-//    }
+    public void addUser(User user){
+
+        users.add(user);
+    }
+
+
 
     public long getId() {
         return id;
@@ -29,20 +38,28 @@ public class Category {
     public void setId(long id) {
         this.id = id;
     }
-//
-//    public List<String> getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(List<String> category) {
-//        this.category = category;
-//    }
 
-    public Collection<User> getUsers() {
+    public String getNewsCategory() {
+        return newsCategory;
+    }
+
+    public void setNewsCategory(String newsCategory) {
+        this.newsCategory = newsCategory;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+/*public Collection<User> getUsers() {
         return users;
     }
 
     public void setUsers(Collection<User> users) {
         this.users = users;
-    }
+    }*/
 }

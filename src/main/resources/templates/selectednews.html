@@ -13,8 +13,20 @@
 <body>
 <div th:replace="base :: navlinks"></div>
 
-<!--<p th:inline="text"><span>  Authors: [[${author}]]</span></p>-->
-
+<div class="container">
+    <h5>Selected news</h5>
+    <!--<div class="card" th:each="category : ${category}">
+        <div class="card-body" th:each="source : ${source}" th:if="${source.category}==category.newsCategory">-->
+    <div class="card" >
+        <div class="card-body" th:each="source : ${source}" >
+            <Span th:text="${source.name}"></Span> <br/>
+            <Span th:text="${source.category}"></Span><br />
+            <Span th:text="${source.description}"></Span><br/>
+            <span><a th:href="${source.url}"><Span th:text="${source.url}"></Span></a></span><br/>
+            <Span th:text="${source.language}"></Span><br/>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <h5>Articles</h5>

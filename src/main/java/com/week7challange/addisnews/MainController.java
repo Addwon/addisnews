@@ -2,9 +2,7 @@ package com.week7challange.addisnews;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class MainController {
@@ -29,6 +24,9 @@ public class MainController {
     @Autowired
     CategoryRepository categoryRepository;
 
+    /*@Autowired
+    SourceRepository sourceRepository;
+*/
     @RequestMapping("/login")
     public String login(){return "login";}
 
@@ -38,26 +36,12 @@ public class MainController {
 
         RestTemplate restTemplate=new RestTemplate();
         String url="https://newsapi.org/v2/everything?q=bitcoin&apiKey=cdcff7c00ad446bd9fd970620d96b155";
-        //MediaType contentType = responseEntity.getHeaders().getContentType();
-        //HttpStatus statusCode = responseEntity.getStatusCode();
-       // News news[]=restTemplate.getForObject("https://newsapi.org/v2/everything?q=bitcoin&apiKey=cdcff7c00ad446bd9fd970620d96b155",News[].class);
-        //List<News> news=restTemplate.getForObject("https://newsapi.org/v2/everything?q=bitcoin&apiKey=cdcff7c00ad446bd9fd970620d96b155",News.class).getNews();
-        //List<Articles> articles=restTemplate.getForObject("https://newsapi.org/v2/everything?q=bitcoin&apiKey=cdcff7c00ad446bd9fd970620d96b155",Articles.class).getArticles();
-        //List<Source> sources=restTemplate.getForObject("https://newsapi.org/v2/everything?q=bitcoin&apiKey=cdcff7c00ad446bd9fd970620d96b155",Source.class).getSources();
+        String testUrl="https://newsapi.org/v2/top-headlines?sources=abc-news&apiKey=cdcff7c00ad446bd9fd970620d96b155";
+       News news=restTemplate.getForObject(testUrl,News.class);
 
-        /*News news=restTemplate.getForObject("https://newsapi.org/v2/top-headlines -G \\\n" +
-                "    -d country=us \\\n" +
-                "    -d apiKey=cdcff7c00ad446bd9fd970620d96b155",News.class);*/
-        //return news.getArticles().getAuthor();
-
-
-       News news=restTemplate.getForObject("https://newsapi.org/v2/everything?q=bitcoin&apiKey=cdcff7c00ad446bd9fd970620d96b155",News.class);
-      // Articles articles=restTemplate.getForObject(url,Articles.class);
-        //ResponseEntity<Articles[]> articles = restTemplate.getForEntity(url, Articles[].class);
-       model.addAttribute("author",news.getTotalResults());
+       //model.addAttribute("author",news.getTotalResults());
         model.addAttribute("articles",news.getArticles());
        return "index";
-        //return news.getArticles().;
     }
 
     //User registration
@@ -78,25 +62,61 @@ public class MainController {
         }
 
     }
-    //Add topic of interest
-    @RequestMapping(value="/topicsofinterestform",method= RequestMethod.GET)
-    public String showTopicsofInterestPage(Model model){
-        model.addAttribute("category",new Category());
-        return "topicsofinterestform";
-    }
-    @RequestMapping(value="/topicsofinterestform",method= RequestMethod.POST)
-    public String processTopicsofInterestPage(@Valid @ModelAttribute("category") Category category, BindingResult result, Model model,Principal principal){
 
-        if(result.hasErrors()){
-            return "topicsofinterestform";
-        }else{
-            User user=userRepository.findByUsername(principal.getName());
-            //category.setUsers(user.getId());
-            categoryRepository.save(category);
-            return "redirect:/";
+    @GetMapping("/addcategory")
+    public String addCategory(Model model) {
+        String url2="https://newsapi.org/v2/sources?apiKey=cdcff7c00ad446bd9fd970620d96b155";
+        RestTemplate restTemplate = new RestTemplate();
+        NewsAgencies newsAgencies = restTemplate.getForObject(url2, NewsAgencies.class);
+        List<Source> sources =  newsAgencies.getSources();
+        Set<String> categories = new HashSet<>();
+        for (Source source :
+                sources) {
+            categories.add(source.getCategory());
+            System.out.println("GettMapping, source.getName():"+source.getName());
         }
 
+        model.addAttribute("categories", categories);
+        model.addAttribute("category", new Category());
+        
+        return "addcategory";
     }
+
+
+    @PostMapping("/addcategory")
+    public String addCategory(Category category, BindingResult result, Model model,Source source, NewsAgencies newsAgencies,Authentication auth, HttpServletRequest request ){
+
+        if (result.hasErrors()) {
+            return "addcategory";
+        }
+        User user = userRepository.findByUsername(auth.getName());
+        category.addUser(user);
+        System.out.println("PostMapping, source.getName():"+source.getName());
+        //category.setNewsCategory(source.getName());
+        categoryRepository.save(category);
+        //sourceRepository.save(newsAgencies.getSources());
+        return "redirect:/selectednews";
+    }
+    //Show selected news
+    @RequestMapping("/selectednews")
+    public String showSelectedNews(Model model,Category category,Source source)
+    {
+        //source.setId(category.);
+        RestTemplate restTemplate=new RestTemplate();
+        String url3="https://newsapi.org/v2/sources?apiKey=cdcff7c00ad446bd9fd970620d96b155";
+        String url4="https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=cdcff7c00ad446bd9fd970620d96b155";
+        News news=restTemplate.getForObject(url4,News.class);
+
+
+
+        NewsAgencies newsAgencies=restTemplate.getForObject(url3,NewsAgencies.class);
+
+       model.addAttribute("source",newsAgencies.getSources());
+        model.addAttribute("articles",news.getArticles());
+        return "selectednews";
+    }
+
+
     //Search items
 
    /* @GetMapping("/search")
