@@ -6,7 +6,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Source {
-
+    private long sourceId;
     private String id;
     private String name;
     private String category;
@@ -68,5 +68,13 @@ public class Source {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public long getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(long sourceId) {
+        this.sourceId = sourceId;
     }
 }

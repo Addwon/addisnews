@@ -15,6 +15,11 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    TopicRepository topicRepository;
+
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public void run(String... strings) throws Exception{
@@ -38,5 +43,13 @@ public class DataLoader implements CommandLineRunner {
         user3.setRoles(Arrays.asList(userRole));
         userRepository.save(user3);
 
+        Topic topic=new Topic();
+        topic.setTopictext("Apple");
+        topicRepository.save(topic);
+
+        Category category=new Category();
+        category.setNewsCategory("technology");
+        category.addUser(user2);
+        categoryRepository.save(category);
     }
 }

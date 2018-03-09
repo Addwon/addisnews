@@ -11,16 +11,14 @@
 <body>
 <div th:replace="base :: navlinks"></div>
 <div class="container" >
-    <form th:action="@{/addcategory}" th:method="post" th:object="${category}">
+    <form th:action="@{/addtopic}" th:method="post" th:object="${topic}">
         <input type="hidden" th:field="*{id}">
-
-        <select id="topics" name="category" class="selectpicker">
-
-            <option th:each="category :${categories}" id="newsCategory" th:value="${cat}" th:text="${category}" th:selected="${newsCategory}"></option>
-
-            <input type="Submit" value="Submit">
-        </select>
-
+        <div class="col-3">
+            <label id="labelTopic">Topic</label>
+            <input type="text" class="form-control" id="textTopic" th:field="*{topictext}" placeholder="your new topic"/>
+            <span th:if="${#fields.hasErrors('topictext')}" th:errors="*{topictext}"></span>
+        </div><br/>
+        <input type="Submit" value="Submit">
     </form>
 
 </div>

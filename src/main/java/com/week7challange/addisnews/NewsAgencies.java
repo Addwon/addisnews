@@ -9,6 +9,9 @@ public class NewsAgencies {
     private long id;
     private String status;
 
+    public NewsAgencies() {
+    }
+
     private List<Source> sources;
 
     public List<Source> getSources() {

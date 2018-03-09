@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Index</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <!--<link href="/css/style.css" rel="stylesheet"/>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="News.js"></script>
+
+</head>
+<body>
+<div th:replace="base :: navlinks"></div>
+
+<div class="container">
+    <table class="table" title="Topic List" ">
+        <thead>
+        <tr>
+            <td><b>Your news topics</b></td>
+
+        </tr>
+
+        </thead>
+        <tbody>
+
+        <tr th:each="topic : ${topic}" >
+
+            <td th:text="${topic.topictext}"></td>
+
+            <td><a th:href="@{/showtopic/{id} (id=${topic.id})}">show</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
