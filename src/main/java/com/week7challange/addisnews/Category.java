@@ -29,7 +29,9 @@ public class Category {
         users.add(user);
     }
 
-
+    public Category(List<User> users) {
+        this.users = users;
+    }
 
     public long getId() {
         return id;

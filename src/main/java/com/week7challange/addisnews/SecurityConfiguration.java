@@ -31,10 +31,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http)throws Exception{
         http
                 .authorizeRequests()
-                .antMatchers("/","/h2-console/**","/registration","/css/**","/images/**").permitAll()
+                .antMatchers("/","/h2-console/**","/registration","/css/**","/images/**","/static/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+                .formLogin().loginPage("/login").defaultSuccessUrl("/sessionpage").permitAll()
                 .and()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/login").permitAll().permitAll()

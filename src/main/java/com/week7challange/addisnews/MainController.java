@@ -39,12 +39,11 @@ public class MainController {
     public String showIndex(Model model)
     {
         RestTemplate restTemplate=new RestTemplate();
-        String url="https://newsapi.org/v2/everything?q=bitcoin&apiKey=cdcff7c00ad446bd9fd970620d96b155";
-        String testUrl="https://newsapi.org/v2/top-headlines?sources=abc-news&apiKey=cdcff7c00ad446bd9fd970620d96b155";
         String newsurl="https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=cdcff7c00ad446bd9fd970620d96b155";
         News news=restTemplate.getForObject(newsurl,News.class);
 
         //model.addAttribute("author",news.getTotalResults());
+        model.addAttribute("category","General");
         model.addAttribute("articles",news.getArticles());
        return "index";
     }
@@ -127,6 +126,27 @@ public class MainController {
         return "selectednews";
     }
 
+    @RequestMapping("/sessionpage")
+    public String showFilteredNews(Model model,Category category,Authentication auth,User user)
+    {
+
+            user = userRepository.findByUsername(auth.getName());
+            List<Category> cat = categoryRepository.findByUsers(user);
+
+            for (Category ca :
+                    cat) {
+                System.out.println(ca.getNewsCategory());
+                String newsURL = "https://newsapi.org/v2/top-headlines?country=us&category=" + ca.getNewsCategory() + "&apiKey=cdcff7c00ad446bd9fd970620d96b155";
+                RestTemplate restTemplate = new RestTemplate();
+                News news = restTemplate.getForObject(newsURL, News.class);
+                model.addAttribute("category",ca.getNewsCategory());
+                model.addAttribute("articles", news.getArticles());
+            }
+
+
+        return "index";
+    }
+
     //Post jobs
     @GetMapping("/addtopic")
     public String addTopic(Model model){
@@ -195,44 +215,5 @@ public class MainController {
         categoryRepository.delete(id);
         return "redirect:/categorylist";
     }
-/*
-    //Show topic
-    @RequestMapping("/showtopic")
-    public String showTopicNews(Model model,Category category,Source source,Topic topic)
-    {
-        //source.setId(category.);
-        RestTemplate restTemplate=new RestTemplate();
-        String url3="https://newsapi.org/v2/sources?apiKey=cdcff7c00ad446bd9fd970620d96b155";
-        String url4="https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=cdcff7c00ad446bd9fd970620d96b155";
-        //String url5="https://newsapi.org/v2/everything?q=apple&from=2018-03-08&to=2018-03-08&sortBy=popularity&apiKey=cdcff7c00ad446bd9fd970620d96b155";
-        String url5="https://newsapi.org/v2/top-headlines?q=trump&apiKey=cdcff7c00ad446bd9fd970620d96b155";
-        String newsTopic=topic.getTopictext();
-        System.out.println("newsTopic"+newsTopic);
-        //url5="https://newsapi.org/v2/top-headlines?q="+newsTopic+"&&apiKey=cdcff7c00ad446bd9fd970620d96b155";
-        url5="https://newsapi.org/v2/everything?q="+newsTopic+"&sortBy=publishedAt&apiKey=cdcff7c00ad446bd9fd970620d96b155";
-        News news=restTemplate.getForObject(url5,News.class);
 
-
-
-        NewsAgencies newsAgencies=restTemplate.getForObject(url3,NewsAgencies.class);
-
-        //model.addAttribute("source",newsAgencies.getSources());
-        model.addAttribute("articles",news.getArticles());
-        return "selectednews";
-    }*/
-    //Search items
-
-   /* @GetMapping("/search")
-    public String getSearch()
-    {
-        return "index";
-    }
-
-    @PostMapping("/search")
-    public String showSearchResults(HttpServletRequest request, Model model)
-    {
-        String searchString = request.getParameter("search");
-       model.addAttribute("item",itemRepository.findByItemTitleContainsOrItemCatgoryContains(searchString,searchString));
-        return "index";
-    }*/
 }

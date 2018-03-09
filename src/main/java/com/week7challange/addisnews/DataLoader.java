@@ -52,5 +52,15 @@ public class DataLoader implements CommandLineRunner {
         category.setNewsCategory("technology");
         category.addUser(user2);
         categoryRepository.save(category);
+
+        topic=new Topic();
+        topic.setTopictext("Car");
+        topic.setUser(user3);
+        topicRepository.save(topic);
+
+        category=new Category();
+        category.setNewsCategory("sports");
+        category.addUser(user3);
+        categoryRepository.save(category);
     }
 }

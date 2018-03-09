@@ -27,15 +27,7 @@ public class User {
 
     @Column(name="enabled")
     private boolean enabled;
-   /*
-    @Column(name="category")
-    private Collection<String> categoryofInterest=new HashSet<>();
 
-    public User(Collection<String> categoryofInterest) {
-        this.categoryofInterest = categoryofInterest;
-    }*/
-
-//   private String[] categoryofInterest;
 
     @Column(name="username")
 
@@ -47,10 +39,7 @@ public class User {
     private Collection<Topic> topics = new HashSet<>();
 
 
-   /* @ManyToMany(fetch=FetchType.EAGER)
-    @JoinTable(joinColumns=@JoinColumn(name = "user_id"),
-            inverseJoinColumns=@JoinColumn(name="category_id"))
-    private Collection<Category> categories;*/
+
     @ManyToMany(mappedBy = "users")
     private Set<Category> categories;
 
@@ -70,6 +59,10 @@ public class User {
 
     public Collection<Topic> getTopics() {
         return topics;
+    }
+
+    public User(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     public void setTopics(Collection<Topic> topics) {
@@ -144,13 +137,7 @@ public class User {
         this.roles = roles;
     }
 
- /*   public Collection<Category> getCategories() {
-        return categories;
-    }
 
-    public void setCategories(Collection<Category> categories) {
-        this.categories = categories;
-    }*/
 
     public Set<Category> getCategories() {
         return categories;
