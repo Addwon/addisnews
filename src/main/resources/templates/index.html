@@ -5,10 +5,8 @@
     <meta charset="UTF-8" />
     <title>Index</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
-    <!--<link href="/css/style.css" rel="stylesheet"/>-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="News.js"></script>
-
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
 <div th:replace="base :: navlinks"></div>
@@ -19,7 +17,7 @@
 <div class="container">
     <h5>Articles</h5>
     <div class="card">
-        <h4>[[${author}]] Category</h4>
+        <!--<h6><p th:inline="text"><span>  Category: [[${category}]]</span></p></h6>-->
         <div class="card-body" th:each="articles : ${articles}">
             <!--<Span th:text="${articles.source.name}"></Span> <br/>-->
             <Span th:text="${articles.author}"></Span> <br/>
