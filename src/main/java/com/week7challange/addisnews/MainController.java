@@ -41,7 +41,8 @@ public class MainController {
         RestTemplate restTemplate=new RestTemplate();
         String url="https://newsapi.org/v2/everything?q=bitcoin&apiKey=cdcff7c00ad446bd9fd970620d96b155";
         String testUrl="https://newsapi.org/v2/top-headlines?sources=abc-news&apiKey=cdcff7c00ad446bd9fd970620d96b155";
-        News news=restTemplate.getForObject(testUrl,News.class);
+        String newsurl="https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=cdcff7c00ad446bd9fd970620d96b155";
+        News news=restTemplate.getForObject(newsurl,News.class);
 
         //model.addAttribute("author",news.getTotalResults());
         model.addAttribute("articles",news.getArticles());
@@ -61,6 +62,12 @@ public class MainController {
             return "registration";
         }else{
             user.setEnabled(true);
+            //Role role =roleRepository.findByRole("USER");
+            user.setRoles(Arrays.asList(roleRepository.findByRole("USER")));
+
+            System.out.println("user reg.post[role.getRole(): "+user.getRoles());
+            //user.setRoles(role.getRole());
+
             userRepository.save(user);
             return "redirect:/";
         }
@@ -143,8 +150,9 @@ public class MainController {
     }
     //list topic
     @RequestMapping("/topiclist")
-    public String ShowTopic(Model model){
-        model.addAttribute("topic",topicRepository.findAll());
+    public String ShowTopic(Model model, Principal principal,User user,Topic topic){
+        user=userRepository.findByUsername(principal.getName());
+        model.addAttribute("topic",topicRepository.findByUser(user));
         return"topiclist";
     }
 
@@ -162,8 +170,9 @@ public class MainController {
 
     //show category
     @RequestMapping("/categorylist")
-    public String ShowCategory(Model model){
-        model.addAttribute("category",categoryRepository.findAll());
+    public String ShowCategory(Model model, Principal principal,User user,Category category){
+        user=userRepository.findByUsername(principal.getName());
+        model.addAttribute("category",categoryRepository.findByUsers(user));
         return"categorylist";
     }
     @RequestMapping("/showcategory/{id}")
