@@ -5,42 +5,75 @@
     <title>Base</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
     <!--<link href="/css/style.css" rel="stylesheet"/>-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-<div th:fragment="navlinks">
+<div th:fragment="header1">
+    <div id="header1">
+    <div class="container">
+            <div class="header-wrap d-none d-md-block">
+            <div class="row">
+
+                <!-- Left header box -->
+                <header class="col-6 text-left">
+                    <h1><span>Addis</span>news</h1>
+                </header>
+
+                <!-- Right header box -->
+                <!--<div class="col-6 text-right">
+                    <p class="header-social-icons social-icons">
+                        <a href="#"><i class="fa fa-facebook fa-2x"></i></a>
+                        <a href="#"><i class="fa fa-twitter fa-2x"></i></a>
+                        <a href="#"><i class="fa fa-youtube fa-2x"></i></a>
+                        <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
+                    </p>
+                </div>-->
+            </div>
+        </div>
+    </div>
+   <!-- </div>
+    <div th:fragment="header2">
+    <div id="header2">-->
      <div class="container">
         <nav class="navbar navbar-expand-sm bg-light navbar-light">
             <ul class="navbar-nav">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">Addis News</a>
-                </div>
-                <li class="nav-item active">
+
+                <li th:class="${classActiveSettings}">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item active">
+                <li th:class="${classActiveSettings2}">
                     <a class="nav-link" href="/addcategory">Add category</a>
                 </li>
-                <li class="nav-item active">
+                <li th:class="${classActiveSettings3}">
                     <a class="nav-link" href="/categorylist">News Categories</a>
                 </li>
-                <li class="nav-item active">
+                <li th:class="${classActiveSettings4}">
                     <a class="nav-link" href="/addtopic">Add topic</a>
                 </li>
-                <li class="nav-item active">
+                <li th:class="${classActiveSettings5}">
                     <a class="nav-link" href="/topiclist">My topics</a>
                 </li>
-                <li class="nav-item">
+                <li th:class="${classActiveSettings6}">
                     <a class="nav-link" sec:authorize="isAnonymous()" href="/registration">Sign up</a>
                 </li>
-                <li class="nav-item">
+                <li th:class="${classActiveSettings7}">
                     <a class="nav-link" sec:authorize="isAnonymous()" href="/login" >Log in</a>
                 </li>
                 <li class="nav-item">
                     <a th:href="@{/logout?logout}" class="nav-link js-scroll-trigger" sec:authorize="isAuthenticated()">Log Out</a>
                 </li>
             </ul>
+         <!--   <form class="form-inline header-search-form my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" size="10" placeholder="Search" aria-label="Search"/>
+                <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+            </form>-->
         </nav>
+         <nav class="navbar-default"></nav>
+         <h5> </h5>
     </div>
+</div>
 </div>
 </body>
 </html>

@@ -5,44 +5,34 @@
     <meta charset="UTF-8" />
     <title>Show topic</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <!--<link href="/css/style.css" rel="stylesheet"/>-->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
-    <!--<script src="News.js"></script>-->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+
     <link href="/css/style.css" rel="stylesheet"/>
 </head>
 <body>
-<div th:replace="base :: navlinks"></div>
-
-<!--<div class="container">
-    <h5>Selected news</h5>
-    &lt;!&ndash;<div class="card" th:each="category : ${category}">
-        <div class="card-body" th:each="source : ${source}" th:if="${source.category}==category.newsCategory">&ndash;&gt;
-    <div class="card" >
-        <div class="card-body" th:each="source : ${source}" >
-            <Span th:text="${source.name}"></Span> <br/>
-            <Span th:text="${source.category}"></Span><br />
-            <Span th:text="${source.description}"></Span><br/>
-            <span><a th:href="${source.url}"><Span th:text="${source.url}"></Span></a></span><br/>
-            <Span th:text="${source.language}"></Span><br/>
-        </div>
-    </div>
-</div>-->
-
+<div th:replace="base :: header1"></div>
 <div class="container">
     <h5>News by topic</h5>
-    <div class="card">
-        <div class="card-body" th:each="articles : ${articles}">
-            <!--<Span th:text="${articles.source.name}"></Span> <br/>-->
-            <Span th:text="${articles.author}"></Span> <br/>
-            <Span th:text="${articles.title}"></Span><br />
-            <Span th:text="${articles.description}"></Span><br/>
-            <span><a th:href="${articles.url}"><Span th:text="${articles.url}"></Span></a></span><br/>
-            <!--<Span th:text="${articles.url}"></Span><br/>-->
-            <span><img class="img-rounded" th:src="${articles.urlToImage}" alt="image" style="width:10%"/><br/></span>
-            <Span th:text="${articles.publishedAt}"></Span><br/>
+    <div class="card-columns">
+        <div class="card"  th:each="articles : ${articles}">
+            <span><img class="card-img-top img-responsive" th:src="${articles.urlToImage}" alt="image" /><br/></span>
+
+            <div class="card-body" >
+                <p class="card-text">
+                    <Span class="article-title" th:text="${articles.title}"></Span><br />
+                    <Span class="article-author" th:text="${articles.author}"></Span> <br/>
+                    <Span th:text="${articles.description}"></Span><br/>
+                    <span><a class="article-url" th:href="${articles.url}"><Span th:text="${#strings.substring(articles.url,0,35)}"></Span>...</a></span><br/>
+                </p>
+            </div>
+
+            <div class="card-footer">
+                <Span th:text="${articles.publishedAt}"></Span><br/>
+            </div>
+
         </div>
     </div>
 </div>
+
 </body>
 </html>

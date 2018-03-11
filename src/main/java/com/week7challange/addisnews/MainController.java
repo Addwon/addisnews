@@ -33,7 +33,10 @@ public class MainController {
     SourceRepository sourceRepository;
 */
     @RequestMapping("/login")
-    public String login(){return "login";}
+    public String login(Model model){
+        model.addAttribute("classActiveSettings7","nav-item active");
+        return "login";
+    }
 
     @RequestMapping("/")
     public String showIndex(Model model)
@@ -43,6 +46,7 @@ public class MainController {
         News news=restTemplate.getForObject(newsurl,News.class);
 
         //model.addAttribute("author",news.getTotalResults());
+        model.addAttribute("classActiveSettings","nav-item active");
         model.addAttribute("category","General");
         model.addAttribute("articles",news.getArticles());
        return "index";
@@ -51,6 +55,7 @@ public class MainController {
     //User registration
     @RequestMapping(value="/registration",method= RequestMethod.GET)
     public String showRegistrationPage(Model model){
+        model.addAttribute("classActiveSettings6","nav-item active");
         model.addAttribute("user",new User());
         return "registration";
     }
@@ -85,7 +90,7 @@ public class MainController {
             categories.add(source.getCategory());
             System.out.println("GettMapping, source.getName():"+source.getName());
         }
-
+        model.addAttribute("classActiveSettings2","nav-item active");
         model.addAttribute("categories", categories);
         model.addAttribute("category", new Category());
         
@@ -150,6 +155,7 @@ public class MainController {
     //Post jobs
     @GetMapping("/addtopic")
     public String addTopic(Model model){
+        model.addAttribute("classActiveSettings4","nav-item active");
         model.addAttribute("topic",new Topic());
         return "addtopic";
     }
@@ -172,6 +178,7 @@ public class MainController {
     @RequestMapping("/topiclist")
     public String ShowTopic(Model model, Principal principal,User user,Topic topic){
         user=userRepository.findByUsername(principal.getName());
+        model.addAttribute("classActiveSettings5","nav-item active");
         model.addAttribute("topic",topicRepository.findByUser(user));
         return"topiclist";
     }
@@ -192,6 +199,7 @@ public class MainController {
     @RequestMapping("/categorylist")
     public String ShowCategory(Model model, Principal principal,User user,Category category){
         user=userRepository.findByUsername(principal.getName());
+        model.addAttribute("classActiveSettings3","nav-item active");
         model.addAttribute("category",categoryRepository.findByUsers(user));
         return"categorylist";
     }

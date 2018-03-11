@@ -56,4 +56,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsServiceBean());
 
     }
+
 }
